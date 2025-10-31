@@ -6,126 +6,120 @@
 <title>Quantum Echo™</title>
 
 <!-- SEO / Meta -->
-<meta name="description" content="Quantum Echo™ — Adaptive memory and analytics engine for games, simulations, and real-time software. Realize more. Load less.">
+<meta name="description" content="Quantum Echo™ — Adaptive memory and object runtime for real-time engines and simulations. Realize more. Load less.">
 <meta property="og:title" content="Quantum Echo™">
-<meta property="og:description" content="Adaptive memory and analytics engine for next-gen software.">
+<meta property="og:description" content="Adaptive memory and object runtime for real-time systems.">
 <meta property="og:image" content="https://yourdomain.com/preview.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 
 <style>
-  html, body {
-    margin: 0;
-    padding: 0;
-	padding-top: 80px;
-    background-color: #050505;
-    overflow: hidden;
-    height: 100%;
-    color: white;
-    font-family: "Poppins", sans-serif;
-  }
+html, body {
+  margin: 0;
+  padding: 0;
+  padding-top: 80px;
+  background-color: #050505;
+  overflow-x: hidden;
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
 
-  canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    will-change: transform;
-  }
+/* === Canvas Background === */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;   /* keep behind everything */
+  will-change: transform;
+}
 
-  .icons {
-    position: absolute;
-    top: 15%;
-    width: 100%;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-    opacity: 0;
-    animation: fadeInIcons 2s ease-in-out forwards;
-    animation-delay: 10.5s;
-  }
+/* === Typography === */
+h1 {
+  font-size: clamp(2.5em, 5vw, 4em);
+  color: #f8f8e8;
+  letter-spacing: 2px;
+  margin: 0;
+}
+.tagline {
+  font-size: clamp(1.2em, 2vw, 1.5em);
+  color: #f8f8e8;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+.adaptive, .subtagline {
+  font-size: clamp(1em, 1.8vw, 1.2em);
+  color: #f8f8e8;
+  font-weight: 300;
+  letter-spacing: 1px;
+  opacity: 0.9;
+}
 
-  .industry {
-    position: relative;
-    display: inline-block;
-  }
+/* === Fade-in System === */
+@keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+.fade-in {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeIn 2s ease-in-out forwards;
+}
+.fade-in.delay-1 { animation-delay: 0.5s; }
+.fade-in.delay-2 { animation-delay: 1s; }
+.fade-in.delay-3 { animation-delay: 1.5s; }
+.fade-in.delay-4 { animation-delay: 2s; }
+.fade-in.delay-5 { animation-delay: 2.5s; }
 
-  .icons i {
-    font-size: 2.2em;
-    transition: transform 0.3s;
-    cursor: pointer;
-  }
+/* === Icon Row === */
+.icons {
+  position: relative;
+  margin-top: 120px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}
+.industry { position: relative; display: inline-block; }
+.icons i {
+  font-size: 2.2em;
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+.icons i:hover { transform: scale(1.3); }
+.hover-card {
+  position: absolute;
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  width: 260px;
+  background: rgba(5,5,5,0.9);
+  color: #f8f8e8;
+  padding: 1rem;
+  border-radius: 12px;
+  font-size: 0.9em;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 0 20px var(--glow-color);
+}
+.industry:hover .hover-card {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
 
-  .icons i:hover { transform: scale(1.3); }
+/* === Layout for hero text === */
+h1, .tagline, .adaptive {
+  position: relative;
+  text-align: center;
+  width: 100%;
+  z-index: 1;
+  margin: 0 auto;
+}
+h1 { margin-top: 15vh; }
+.tagline { margin-top: 1rem; }
+.adaptive { margin-top: 0.5rem; }
 
-  .hover-card {
-    position: absolute;
-    top: 120%;
-    left: 50%;
-    transform: translateX(-50%) translateY(10px);
-    width: 260px;
-    background: rgba(5,5,5,0.9);
-    color: #f8f8e8;
-    padding: 1rem;
-    border-radius: 12px;
-    font-size: 0.9em;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 0 20px var(--glow-color);
-  }
-
-  .industry:hover .hover-card {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-
-  h1 {
-    position: absolute;
-    bottom: 30%;
-    width: 100%;
-    text-align: center;
-    font-size: 3em;
-    color: #f8f8e8;
-    opacity: 0;
-    animation: fadeIn 4s ease-in-out forwards;
-    animation-delay: 8s;
-    margin: 0;
-    letter-spacing: 2px;
-  }
-
-  .tagline {
-    position: absolute;
-    bottom: 23%;
-    width: 100%;
-    text-align: center;
-    font-size: 1.3em;
-    color: #f8f8e8;
-    opacity: 0;
-    animation: fadeIn 3s ease-in-out forwards;
-    animation-delay: 9.5s;
-    font-weight: 300;
-    letter-spacing: 1px;
-  }
-
-  .adaptive {
-    position: absolute;
-    bottom: 18%;
-    width: 100%;
-    text-align: center;
-    font-size: 1.1em;
-    color: #f8f8e8;
-    opacity: 0;
-    font-weight: 300;
-    letter-spacing: 1px;
-    animation: fadeIn 2s ease-in-out forwards;
-    animation-delay: 11s;
-  }
-
-  @keyframes fadeIn { to { opacity: 1; } }
-  @keyframes fadeInIcons { to { opacity: 1; } }
-  
-  /* === Navigation Bar === */
+/* === Navigation === */
 nav {
   position: fixed;
   top: 0;
@@ -139,9 +133,8 @@ nav {
   border-bottom: 1px solid rgba(255,255,255,0.08);
   box-shadow: 0 0 15px rgba(0,255,200,0.1);
   backdrop-filter: blur(8px);
-  z-index: 1000; /* keeps navbar above everything */
+  z-index: 1000;
 }
-
 nav a {
   color: #f8f8e8;
   text-decoration: none;
@@ -149,17 +142,13 @@ nav a {
   letter-spacing: 0.5px;
   transition: color 0.3s, text-shadow 0.3s;
 }
-
 nav a:hover {
   color: #00ffff;
   text-shadow: 0 0 10px #00ffff;
 }
-  
-  footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
+
+/* === Footer === */
+footer {
   text-align: center;
   color: #ccc;
   font-size: 0.9em;
@@ -168,57 +157,76 @@ nav a:hover {
   border-top: 1px solid rgba(255,255,255,0.08);
   backdrop-filter: blur(8px);
   box-shadow: 0 -6px 25px rgba(0,255,200,0.08);
-  z-index: 50;
+  margin-top: 100px;
 }
-  
 </style>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
-  <canvas id="waves"></canvas>
+<canvas id="waves"></canvas>
 
-  <nav>
-    <a href="index.html" class="active">Home</a>
-    <a href="features.html">Features</a>
-    <a href="roadmap.html">Roadmap</a>
-	<a href="enterprise.html">Enterprise</a>  
-	<a href="download.html">Downloads</a>
-  </nav>
+<nav>
+  <a href="index.html" class="active">Home</a>
+  <a href="features.html">Features</a>
+  <a href="roadmap.html">Roadmap</a>
+  <a href="enterprise.html">Enterprise</a>
+  <a href="download.html">Downloads</a>
+</nav>
 
-  <canvas id="waves"></canvas>
+<!-- === HERO === -->
+<h1 class="fade-in delay-1">Quantum Echo™</h1>
+<div class="tagline fade-in delay-2">Realize more. Load less.</div>
+<div class="adaptive fade-in delay-3">Adaptive memory and object runtime for real-time engines and simulations.</div>
 
-  <div class="icons">
-    <div class="industry" style="--glow-color:#00ffff;">
-      <i class="fas fa-gamepad" style="color:#00ffff;"></i>
-      <div class="hover-card">Gaming QE brings adaptive, self-managing performace to real-time engines. It automatically balances memory and asset streaming to reduce load times and keep gameplay smooth - no manual tuning required.</div>
+<!-- === ICONS === -->
+<div class="icons fade-in delay-4">
+  <div class="industry" style="--glow-color:#00ffff;">
+    <i class="fas fa-gamepad" style="color:#00ffff;"></i>
+    <div class="hover-card"><strong>Games</strong> — QE keeps gameplay smooth by dynamically loading and unloading assets to prevent frame drops and long load screens.</div>
+  </div>
+  <div class="industry" style="--glow-color:#ff00ff;">
+    <i class="fas fa-cube" style="color:#ff00ff;"></i>
+    <div class="hover-card"><strong>CAD / Engineering</strong> — Handle complex assemblies effortlessly. QE manages object lifecycles so massive models stay responsive.</div>
+  </div>
+  <div class="industry" style="--glow-color:#00ff66;">
+    <i class="fas fa-video" style="color:#00ff66;"></i>
+    <div class="hover-card"><strong>Video / VFX</strong> — Optimize editing and playback by caching active frames and trimming idle data in the background.</div>
+  </div>
+  <div class="industry" style="--glow-color:#ffaa00;">
+    <i class="fas fa-flask" style="color:#ffaa00;"></i>
+    <div class="hover-card"><strong>Scientific Computing</strong> — Manage terabytes of experimental data. QE balances memory use and access for consistent throughput.</div>
+  </div>
+  <div class="industry" style="--glow-color:#ff4444;">
+    <i class="fas fa-chart-line" style="color:#ff4444;"></i>
+    <div class="hover-card"><strong>Finance</strong> — QE dynamically controls data lifetimes for high-frequency processing without manual cache management.</div>
+  </div>
+</div>
+
+<!-- === HOW IT WORKS SECTION === -->
+<section class="fade-in delay-5" style="text-align:center; margin-top:100px; position:relative; z-index:1;">
+  <h2>How Quantum Echo Works</h2>
+  <p>QE monitors object usage, adapts memory in real time, and keeps your systems balanced — automatically.</p>
+
+  <div style="display:flex; justify-content:center; gap:60px; margin-top:40px; flex-wrap:wrap;">
+    <div>
+      <h3>⚙️ Adaptive Runtime</h3>
+      <p>QE allocates, trims, and reuses memory based on live activity — no manual tuning.</p>
     </div>
-    <div class="industry" style="--glow-color:#ff00ff;">
-      <i class="fas fa-cube" style="color:#ff00ff;"></i>
-      <div class="hover-card">CAD/Enineering From large model assemblies to simulation caching, QE intelligenctly manages data lifecycles to keep design tools responsive and fluid - even under massive loads.</div>
+    <div>
+      <h3>💾 Smart Pooling</h3>
+      <p>Idle data is safely pooled and reused to reduce load spikes and fragmentation.</p>
     </div>
-    <div class="industry" style="--glow-color:#00ff66;">
-      <i class="fas fa-video" style="color:#00ff66;"></i>
-      <div class="hover-card">Video Production Smart cashing and memory trimming for editors and renderers. Realize frame data only when needed, cutting down I/O bottlenecks and accelerating your creative workflow.</div>
-    </div>
-    <div class="industry" style="--glow-color:#ffaa00;">
-      <i class="fas fa-flask" style="color:#ffaa00;"></i>
-      <div class="hover-card">Scientific Computing Handle terabytes of experiment or simulation data with memory-aware lifecycles. QE manages object realization and eviction to keep analyses running efficiently.</div>
-    </div>
-    <div class="industry" style="--glow-color:#ff4444;">
-      <i class="fas fa-chart-line" style="color:#ff4444;"></i>
-      <div class="hover-card">Finance High-frequency data streams meet adaptive analytics. QE minimizes latency and maximizes throughout by dynamically controlling in-memory datasets and lifetimes.</div>
+    <div>
+      <h3>📊 Real-Time Analytics</h3>
+      <p>Built-in metrics and dashboards let you visualize memory behavior as it happens.</p>
     </div>
   </div>
+</section>
 
-  <h1>Quantum Echo™</h1>
-
-  <div class="tagline">
-    <span class="phrase">Realize more.</span>
-    <span class="phrase">Load less.</span>
-  </div>
-
-  <div class="adaptive">Adaptive Memory Engine for Everyone.</div>
+<footer>
+  <p>Developed by Quantum Phases — © 2025 All rights reserved.</p>
+</footer>
 
 <script>
 const canvas = document.getElementById("waves");
@@ -238,12 +246,6 @@ const waves = [
 
 let time = 0;
 let baseSpeed = 1;
-
-// individual target speeds for each wave
-let targetSpeed = [1,1,1,1,1];
-let currentSpeed = [1,1,1,1,1];
-
-// global fade-in intro speed
 let introSpeed = 1;
 const start = Date.now();
 
@@ -252,34 +254,18 @@ function easeOut(t){ return 1 - Math.pow(1 - t, 3); }
 function draw(){
   ctx.clearRect(0,0,width,height);
   const elapsed = (Date.now() - start) / 1000;
-  
-  // Smoothly blend amplitude and speed toward target
-  waves.forEach(w => {
-    if (w.targetAmp === undefined) {
-      w.targetAmp = w.amplitude;
-      w.currentAmp = w.amplitude;
-      w.targetSpeed = w.speed;
-      w.currentSpeed = w.speed;
-    }
-    w.currentAmp += (w.targetAmp - w.currentAmp) * 0.08;
-    w.currentSpeed += (w.targetSpeed - w.currentSpeed) * 0.08;
-  });
-
-  
 
   waves.forEach((wave,i)=>{
     const grow = Math.max(0, elapsed - wave.delay);
-    const progress = Math.min(grow / 1.5, 1);
+    const progress = Math.min(grow / 1.2, 1);
     const visibleWidth = width * progress;
-
     ctx.beginPath();
     for(let x=0;x<visibleWidth;x++){
       const y = height/2 +
-        Math.sin(x / wave.wavelength + time * wave.speed * currentSpeed[i] + wave.offset) *
+        Math.sin(x / wave.wavelength + time * wave.speed * baseSpeed + wave.offset) *
         wave.amplitude * Math.sin(time + i);
       ctx.lineTo(x, y + (i - 2)*40);
     }
-
     ctx.strokeStyle = wave.color;
     ctx.lineWidth = 2;
     ctx.shadowBlur = 20;
@@ -288,54 +274,38 @@ function draw(){
     ctx.stroke();
   });
 
-  // always advance time slightly so idle has motion
   time += 0.05 * baseSpeed * introSpeed;
   requestAnimationFrame(draw);
 }
-
 draw();
 
-// ---- Intro sequence (waves build, then idle drift) ----
+/* Short intro, waves settle quickly */
 setTimeout(()=>{
   let t=0;
   const fadeOut = setInterval(()=>{
-    t += 0.02;
+    t += 0.03;
     introSpeed = 1 - easeOut(t);
     if(t >= 1){
       clearInterval(fadeOut);
-      introSpeed = 0.2; // gentle idle movement
-      for(let i=0;i<targetSpeed.length;i++) targetSpeed[i]=0.2;
+      introSpeed = 0.25;
     }
-  },30);
-},6500);
+  },25);
+},2500);
 
-// === ICON INTERACTIVITY (stable smooth version) ===
-const icons = document.querySelectorAll('.icons i');
-
-// Store the base amplitude and speed so we can restore them later
-waves.forEach(w => {
-  w.baseAmplitude = w.amplitude;
-  w.baseSpeed = w.speed;
-});
-
-icons.forEach((icon, index) => {
-  icon.addEventListener('mouseenter', () => {
-    const wave = waves[index];
-    wave.amplitude = wave.baseAmplitude * 1.6; // amplify height
-    wave.speed = wave.baseSpeed * 2.0;         // accelerate motion
+/* Hover reaction on icons container */
+const iconSection = document.querySelector('.icons');
+iconSection.addEventListener('mouseenter', () => {
+  waves.forEach(w => {
+    w.amplitude *= 1.4;
+    w.speed *= 2.0;
   });
-
-  icon.addEventListener('mouseleave', () => {
-    const wave = waves[index];
-    wave.amplitude = wave.baseAmplitude;
-    wave.speed = wave.baseSpeed;
+});
+iconSection.addEventListener('mouseleave', () => {
+  waves.forEach(w => {
+    w.amplitude /= 1.4;
+    w.speed /= 2.0;
   });
 });
 </script>
-<footer class="fade-up">
-  <p>Developed by Quantum Phases — © 2025 All rights reserved.</p>
-</footer>
 </body>
 </html>
-
-
