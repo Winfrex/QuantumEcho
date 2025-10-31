@@ -120,3 +120,140 @@ footer {
   position: relative;
   z-index: 10;
 }
+
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 1rem;
+  border-radius: 8px;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #0c0c0c;
+  color: #eaeaea;
+  font-size: 0.95rem;
+}
+
+.comparison-table thead {
+  background: #111;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #222;
+  text-align: left;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.comparison-table th {
+  font-weight: 600;
+  color: #00ffff;
+  white-space: normal;
+}
+
+.comparison-table td strong {
+  color: #fff;
+}
+
+.comparison-table tr:hover td {
+  background: #141414;
+}
+
+.comparison-note {
+  font-size: 0.85rem;
+  color: #aaa;
+  margin-top: 0.5rem;
+}
+.tabs { margin-top: 1rem; }
+.tab-buttons { display: flex; gap: 1rem; }
+.tablink {
+  background: #111; color: #00ffff; border: none; padding: 0.5rem 1rem;
+  cursor: pointer; border-radius: 8px; font-weight: 600;
+}
+
+.pricing-table th,
+.pricing-table td {
+  padding: 0.9rem 1rem;
+}
+
+.pricing-table th {
+  color: #00ffff;
+  font-weight: 600;
+  border-bottom: 1px solid #111;
+}
+
+.pricing-table td {
+  color: #ddd;
+  border-bottom: 1px solid #151515;
+}
+
+.pricing-table tr:hover td {
+  background: #0f0f0f;
+}
+
+.pricing-table td strong {
+  color: #fff;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+
+.tablink.active { background: #00ffff; color: #000; }
+.tabcontent { display: none; margin-top: 1rem; }
+.tabcontent.active { display: block; }
+.pricing-tiers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.pricing-card {
+  background: #0d0d0d;
+  border: 1px solid #111;
+  border-radius: 16px;
+  padding: 1.5rem;
+  width: 300px;
+  box-shadow: 0 0 20px rgba(0,255,255,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 25px rgba(0,255,255,0.1);
+}
+
+.pricing-card h3 {
+  color: #00ffff;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.pricing-card .price {
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.pricing-card ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.pricing-card ul li {
+  color: #ccc;
+  margin-bottom: 0.5rem;
+}
+
+.pricing-note {
+  text-align: center;
+  color: #888;
+  margin-top: 1rem;
+}
