@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantum Echo — Contact</title>
+  <link rel="stylesheet" href="quantum-theme.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    main {
+      max-width: 800px;
+      margin: 120px auto 80px;
+      padding: 2rem;
+      background: rgba(10,10,10,0.7);
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(0,255,200,0.05);
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-top: 1.5rem;
+    }
+    label {
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    input, textarea {
+      padding: 0.8rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #fff;
+      border-radius: 8px;
+      font-size: 1em;
+      resize: vertical;
+    }
+    button {
+      background: #00ffff;
+      color: #050505;
+      border: none;
+      padding: 0.9rem 1.2rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover { background: #00d0d0; }
+    .alt-contact {
+      margin-top: 2rem;
+      text-align: center;
+      color: #ccc;
+    }
+    .alt-contact a {
+      color: #00ffff;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="roadmap.html">Roadmap</a>
+    <a href="enterprise.html">Enterprise</a>
+    <a href="download.html">Downloads</a>
+    <a href="contact.html" class="active">Contact</a>
+  </nav>
+
+  <main class="fade-up">
+    <h1><i class="fas fa-envelope"></i> Contact Quantum Echo</h1>
+    <p>For licensing, integration, or partnership inquiries, please fill out the form below.  
+       A member of the Quantum Phases team will respond within two business days.</p>
+
+    <!-- Simple email form -->
+    <form action="mailto:contact.quantumphases@gmail.com" method="post" enctype="text/plain">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="Name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="Email" required>
+
+      <label for="subject">Subject</label>
+      <input type="text" id="subject" name="Subject" placeholder="Licensing, Integration, Support..." required>
+
+      <label for="message">Message</label>
+      <textarea id="message" name="Message" rows="6" required></textarea>
+
+      <button type="submit"><i class="fas fa-paper-plane"></i> Send Message</button>
+    </form>
+
+    <div class="alt-contact">
+      <p>Prefer direct email?  
+        Reach us at <a href="mailto:contact.quantumphases@gmail.com">contact.quantumphases@gmail.com</a>
+      </p>
+    </div>
+  </main>
+
+  <footer class="fade-up">
+    <p>Contact: <a href="mailto:contact.quantumphases@gmail.com">contact.quantumphases@gmail.com</a></p>
+    <p>Developed by Quantum Phases — © 2025 All rights reserved.</p>
+  </footer>
+</body>
+</html>
