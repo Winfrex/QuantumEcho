@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantum Echo — Enterprise & Server Systems</title>
+  <link rel="stylesheet" href="quantum-theme.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+  <nav class="navbar">
+    <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="enterprise.html" class="active">Enterprise</a>
+    <a href="roadmap.html">Roadmap</a>
+  </nav>
+
+  <!-- HERO -->
+  <header class="page-header fade-up">
+    <h1><i class="fas fa-server"></i> Enterprise & Server Systems</h1>
+    <p>Bring adaptive intelligence to your infrastructure — Quantum Echo replaces static caching and monitoring tools with a self-managing runtime built for performance, persistence, and uptime.</p>
+    <a href="contact.html" class="btn-primary">Request Enterprise Access</a>
+  </header>
+
+  <!-- SECTION 1: INTRO -->
+  <section class="fade-up">
+    <h2><i class="fas fa-network-wired"></i> Adaptive Runtime Intelligence for Infrastructure</h2>
+    <p>
+      Quantum Echo (QE) runs as a lightweight, self-managing layer that governs memory, caching, and data persistence across servers or distributed systems.
+      It dynamically reacts to real system pressure — balancing workloads, trimming inactive data, and maintaining uptime automatically.
+    </p>
+    <ul class="feature-list">
+      <li><strong>Adaptive Caching:</strong> QE reallocates memory on the fly, no manual tuning required.</li>
+      <li><strong>Integrated Persistence:</strong> Built-in session and index systems handle snapshot recovery and state management.</li>
+      <li><strong>Analytics & Health:</strong> Monitor memory and performance metrics directly from QE’s internal analytics module.</li>
+      <li><strong>License & Access:</strong> Quantum Echo is a proprietary runtime licensed for commercial integration.
+Source code access is available to enterprise partners under NDA for review or audit purposes.</li>
+    </ul>
+  </section>
+
+  <!-- SECTION 2: DEPLOYMENT OPTIONS -->
+  <section class="fade-up alt-bg">
+    <h2><i class="fas fa-cubes"></i> Flexible Deployment</h2>
+    <p>
+      QE can operate as a drop-in adaptive cache, a service node, or an embedded runtime. It scales from single-server deployments to multi-node clusters.
+    </p>
+    <ul class="feature-list">
+      <li><strong>Embedded Mode:</strong> Integrate directly into applications via C++, C#, or Python bindings.</li>
+      <li><strong>Service Mode:</strong> Run as a standalone service exposing HTTP or WebSocket APIs.</li>
+      <li><strong>Containerized Mode:</strong> Deploy QE in Docker or Kubernetes clusters for adaptive caching across nodes.</li>
+    </ul>
+  </section>
+
+  <section class="fade-up">
+  <h2><i class="fas fa-layer-group"></i> QE vs Traditional Infrastructure Layers</h2>
+  <p>
+    Quantum Echo combines the caching, monitoring, and optimization functions normally spread across several enterprise tools into one adaptive runtime.
+  </p>
+
+  <!-- Accordion -->
+  <div class="accordion">
+    <!-- Caching -->
+    <button class="accordion-btn">💾 Caching Systems</button>
+    <div class="accordion-panel">
+      <table class="comparison-table">
+        <thead>
+          <tr><th>Feature</th><th>Redis</th><th>Memcached</th><th>Quantum Echo v7</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>License</td><td>RSAL / Commercial</td><td>BSD</td><td><strong>Proprietary / Commercial</strong></td></tr>
+          <tr><td>Memory Management</td><td>Static eviction</td><td>Manual</td><td><strong>Adaptive, self-managed</strong></td></tr>
+          <tr><td>Persistence</td><td>Optional RDB/AOF</td><td>None</td><td><strong>Built-in snapshots & sessions</strong></td></tr>
+          <tr><td>Configuration</td><td>Manual tuning</td><td>Manual</td><td><strong>Automatic balancing</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Monitoring -->
+    <button class="accordion-btn">📈 Monitoring & Performance Tools</button>
+    <div class="accordion-panel">
+      <table class="comparison-table">
+        <thead>
+          <tr><th>Feature</th><th>Datadog</th><th>IBM Instana</th><th>Quantum Echo v7</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Data Collection</td><td>Agent-based</td><td>Agent-based</td><td><strong>Embedded analytics</strong></td></tr>
+          <tr><td>Cloud Dependency</td><td>Required</td><td>Required</td><td><strong>Offline / on-prem capable</strong></td></tr>
+          <tr><td>Metrics Export</td><td>Dashboard only</td><td>Dashboard only</td><td><strong>JSON / CSV output</strong></td></tr>
+          <tr><td>Cost</td><td>Per-host</td><td>Per-service</td><td><strong>Single runtime license</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Optimization -->
+    <button class="accordion-btn">⚙️ Resource Optimization</button>
+    <div class="accordion-panel">
+      <table class="comparison-table">
+        <thead>
+          <tr><th>Feature</th><th>IBM Turbonomic</th><th>VMware vRealize</th><th>Quantum Echo v7</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Scope</td><td>VM / Cluster</td><td>Virtual infrastructure</td><td><strong>Application runtime</strong></td></tr>
+          <tr><td>Control Method</td><td>External AI policies</td><td>Cloud orchestration</td><td><strong>In-process adaptive loop</strong></td></tr>
+          <tr><td>Deployment</td><td>Cloud / hybrid</td><td>On-prem / cloud</td><td><strong>Embedded or standalone</strong></td></tr>
+          <tr><td>Licensing</td><td>Commercial / Subscription</td><td>Commercial</td><td><strong>Proprietary with NDA source access</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Simple accordion JS
+  const acc = document.querySelectorAll(".accordion-btn");
+  acc.forEach(btn => {
+    btn.addEventListener("click", () => {
+      btn.classList.toggle("active");
+      const panel = btn.nextElementSibling;
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
+    });
+  });
+</script>
+
+<!-- SECTION 5: PRICING OVERVIEW -->
+<section class="fade-up">
+  <h2><i class="fas fa-dollar-sign"></i> Enterprise Pricing Overview</h2>
+  <p>
+    Quantum Echo offers predictable, volume-based licensing to match your infrastructure scale. 
+    The table below outlines common starting tiers. 
+    Exact quotes are customized based on cluster size, workload profile, and support level.
+  </p>
+
+  <div class="table-wrapper">
+    <table class="comparison-table pricing-table">
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Scope</th>
+          <th>Starting Price</th>
+          <th>Key Features</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Standard Enterprise</strong></td>
+          <td>Up to 10 nodes</td>
+          <td><strong>$1 000 / node / month</strong></td>
+          <td>Adaptive runtime, integrated analytics, priority support</td>
+        </tr>
+        <tr>
+          <td><strong>Advanced Enterprise</strong></td>
+          <td>11 – 50 nodes / multi-region clusters</td>
+          <td><strong>$800 / node / month</strong></td>
+          <td>Dashboard integration, extended analytics, dedicated contact</td>
+        </tr>
+        <tr>
+          <td><strong>Strategic / OEM</strong></td>
+          <td>Unlimited / embedded deployments</td>
+          <td><strong>From $250 K / year (custom)</strong></td>
+          <td>Source-view access under NDA, OEM or royalty terms</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="comparison-note">
+    *Volume discounts and annual prepayment options available. 
+    Contact us for a detailed quote or OEM integration plan.*
+  </p>
+
+  <a href="contact.html" class="btn-secondary">Request Enterprise Quote</a>
+</section>
+
+  <!-- SECTION 4: ENTERPRISE LICENSING -->
+  <section class="fade-up alt-bg">
+    <h2><i class="fas fa-key"></i> Enterprise Licensing & Integration</h2>
+    <p>
+      QE offers flexible licensing for on-prem, embedded, and royalty-based integrations. Choose between per-node licensing, royalty sharing for commercial integrations, or full enterprise deployment agreements.
+    </p>
+    <ul class="feature-list">
+      <li><strong>Per-node or cluster-based pricing</strong></li>
+      <li><strong>Royalty options</strong> for OEM and middleware integration</li>
+      <li><strong>Priority support</strong> and version tracking through QE’s client portal</li>
+      <li><strong>Custom feature builds</strong> available for high-scale partners</li>
+    </ul>
+    <a href="contact.html" class="btn-secondary">Contact for Licensing Info</a>
+  </section>
+
+  <!-- CTA -->
+  <footer class="page-footer fade-up">
+    <h2>Ready to modernize your infrastructure?</h2>
+    <p>Replace static caching and external orchestration with adaptive intelligence built directly into your runtime.</p>
+    <a href="contact.html" class="btn-primary">Request Demo Access</a>
+  </footer>
+</body>
+</html>
