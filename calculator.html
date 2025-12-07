@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Echo™ — Memory Savings Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* === Quantum Echo Unified Theme === */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background: radial-gradient(circle at 50% 20%, #0a0a0a 0%, #000 80%);
+            color: #f8f8e8;
+            overflow-x: hidden;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        .bg-waves {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg,
+                rgba(0,255,255,0.15) 0%,
+                rgba(255,0,255,0.1) 25%,
+                rgba(0,255,100,0.1) 50%,
+                rgba(255,170,0,0.1) 75%,
+                rgba(255,68,68,0.15) 100%);
+            filter: blur(80px);
+            z-index: -1;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1.2rem;
+            background: rgba(255,255,255,0.02);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 0 15px rgba(0,255,200,0.08);
+            backdrop-filter: blur(6px);
+        }
+        nav a {
+            color: #f8f8e8;
+            text-decoration: none;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #00ffff;
+        }
+
+        header {
+            text-align: center;
+            margin-top: 3rem;
+            margin-bottom: 2rem;
+        }
+        header h1 {
+            font-size: 2.4em;
+            letter-spacing: 2px;
+            color: #f8f8e8;
+            text-shadow: 0 0 20px rgba(0,255,200,0.3);
+        }
+        header p {
+            color: #ccc;
+            font-weight: 300;
+            margin-top: 0.5rem;
+        }
+
+        .calculator {
+            max-width: 900px;
+            margin: 0 auto 3rem auto;
+            padding: 2rem;
+            background: rgba(255,255,255,0.04);
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 0 25px rgba(0,255,200,0.1);
+        }
+
+        /* GPU Toggle */
+        .gpu-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        .gpu-toggle label {
+            cursor: pointer;
+        }
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: 0.3s;
+            border-radius: 24px;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: #888;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: rgba(0,255,255,0.3);
+        }
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+            background-color: #00ffff;
+            box-shadow: 0 0 10px rgba(0,255,255,0.5);
+        }
+
+        .presets {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+
+        .preset-btn {
+            background: #111;
+            color: #00ffff;
+            border: 1px solid rgba(0,255,255,0.2);
+            padding: 0.6rem 1.2rem;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 500;
+            font-family: "Poppins", sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .preset-btn:hover {
+            background: #00ffff;
+            color: #000;
+            box-shadow: 0 0 15px rgba(0,255,255,0.3);
+        }
+
+        .input-section {
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group > label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: #222;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #00ffff;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0,255,255,0.5);
+        }
+
+        input[type="number"] {
+            width: 120px;
+            padding: 0.6rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            background: #0c0c0c;
+            color: #f8f8e8;
+            font-size: 1rem;
+            font-family: "Poppins", sans-serif;
+            text-align: right;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 10px rgba(0,255,255,0.2);
+        }
+
+        .unit {
+            color: #888;
+            font-size: 0.9rem;
+            min-width: 60px;
+        }
+
+        .distribution {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .dist-item {
+            background: #0c0c0c;
+            padding: 1.25rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .dist-item label {
+            display: block;
+            color: #f8f8e8;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .dist-item input[type="range"] {
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+
+        .dist-value {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #00ffff;
+            text-shadow: 0 0 10px rgba(0,255,255,0.3);
+        }
+
+        .dist-item small {
+            display: block;
+            color: #666;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .results {
+            background: #0c0c0c;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .results h2 {
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            color: #00ffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .result-card {
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .result-card.traditional {
+            background: rgba(255, 68, 68, 0.08);
+            border-color: rgba(255, 68, 68, 0.2);
+        }
+
+        .result-card.qe {
+            background: rgba(0, 255, 200, 0.08);
+            border-color: rgba(0, 255, 200, 0.2);
+        }
+
+        .result-card h3 {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+
+        .result-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .result-card.traditional .result-value {
+            color: #ff6b6b;
+            text-shadow: 0 0 15px rgba(255, 68, 68, 0.4);
+        }
+
+        .result-card.qe .result-value {
+            color: #00ffcc;
+            text-shadow: 0 0 15px rgba(0, 255, 200, 0.4);
+        }
+
+        .result-unit {
+            font-size: 1rem;
+            color: #888;
+            font-weight: 400;
+        }
+
+        /* GPU Stats Row */
+        .gpu-stats {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .gpu-stats.visible {
+            display: grid;
+        }
+        .gpu-card {
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            background: rgba(138, 43, 226, 0.08);
+            border: 1px solid rgba(138, 43, 226, 0.2);
+        }
+        .gpu-card h3 {
+            font-size: 0.8rem;
+            color: #aaa;
+            margin-bottom: 0.25rem;
+            font-weight: 400;
+        }
+        .gpu-card .gpu-value {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #a855f7;
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+        }
+
+        .savings-banner {
+            background: linear-gradient(135deg, rgba(0,255,255,0.12), rgba(0,255,100,0.08));
+            border: 1px solid rgba(0,255,255,0.2);
+            border-radius: 12px;
+            padding: 1.75rem;
+            text-align: center;
+        }
+
+        .savings-banner h3 {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .savings-value {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #00ffff;
+            text-shadow: 0 0 30px rgba(0,255,255,0.5);
+        }
+
+        .savings-detail {
+            margin-top: 0.5rem;
+            color: #ccc;
+            font-weight: 300;
+        }
+
+        .savings-detail span {
+            color: #00ffcc;
+            font-weight: 500;
+        }
+
+        .industry-note {
+            margin-top: 1.5rem;
+            padding: 1rem 1.25rem;
+            background: rgba(0, 255, 255, 0.05);
+            border-left: 3px solid #00ffff;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .industry-note strong {
+            color: #00ffff;
+        }
+
+        footer {
+            text-align: center;
+            color: #ccc;
+            font-size: 0.9em;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 4rem;
+            background: rgba(255,255,255,0.02);
+            box-shadow: 0 -5px 15px rgba(0,255,200,0.05);
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .comparison, .gpu-stats {
+                grid-template-columns: 1fr;
+            }
+            .distribution {
+                grid-template-columns: 1fr;
+            }
+            header h1 {
+                font-size: 1.8em;
+            }
+            .calculator {
+                margin: 0 1rem 3rem 1rem;
+                padding: 1.5rem;
+            }
+            .presets {
+                gap: 0.5rem;
+            }
+            .preset-btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            nav {
+                gap: 1rem;
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1.2s ease forwards;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-waves"></div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="features.html">Features</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="calculator.html" style="color:#00ffff;">Calculator</a>
+        <a href="download.html">Downloads</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <header class="fade-in">
+        <h1>💾 Memory Savings Calculator</h1>
+        <p>See how Quantum Echo™ optimizes your application's memory footprint</p>
+    </header>
+
+    <div class="calculator fade-in">
+        <div class="presets">
+            <button class="preset-btn" onclick="applyPreset('game')">🎮 Open World Game</button>
+            <button class="preset-btn" onclick="applyPreset('cad')">🏗️ CAD Assembly</button>
+            <button class="preset-btn" onclick="applyPreset('simulation')">🔬 Simulation</button>
+            <button class="preset-btn" onclick="applyPreset('finance')">📈 Financial Data</button>
+        </div>
+
+        <div class="gpu-toggle">
+            <label for="gpuToggle">GPU Residency Model</label>
+            <div class="toggle-switch">
+                <input type="checkbox" id="gpuToggle" onchange="toggleGPU()">
+                <span class="toggle-slider"></span>
+            </div>
+        </div>
+
+        <div class="input-section">
+            <div class="input-group">
+                <label>Total Objects / Entities</label>
+                <div class="input-row">
+                    <input type="range" id="entitySlider" min="1000" max="1000000" step="1000" value="100000" oninput="syncInput('entity')">
+                    <input type="number" id="entityInput" min="100" max="10000000" value="100000" oninput="syncSlider('entity')">
+                    <span class="unit">objects</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Average Object Size (your data payload)</label>
+                <div class="input-row">
+                    <input type="range" id="sizeSlider" min="64" max="8192" step="64" value="512" oninput="syncInput('size')">
+                    <input type="number" id="sizeInput" min="16" max="65536" value="512" oninput="syncSlider('size')">
+                    <span class="unit">bytes</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Object Activity Distribution</label>
+                <div class="distribution">
+                    <div class="dist-item">
+                        <label>🟢 Active</label>
+                        <input type="range" id="activeSlider" min="0" max="100" value="10" oninput="updateDistribution('active')">
+                        <div class="dist-value"><span id="activeValue">10</span>%</div>
+                    </div>
+                    <div class="dist-item">
+                        <label>🟡 Idle</label>
+                        <input type="range" id="idleSlider" min="0" max="100" value="30" oninput="updateDistribution('idle')">
+                        <div class="dist-value"><span id="idleValue">30</span>%</div>
+                    </div>
+                    <div class="dist-item">
+                        <label>🔴 Inactive</label>
+                        <div class="dist-value"><span id="inactiveValue">60</span>%</div>
+                        <small>auto-calculated</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="results">
+            <h2>⚡ Memory Comparison</h2>
+
+            <div class="comparison">
+                <div class="result-card traditional">
+                    <h3>Traditional Approach</h3>
+                    <div class="result-value" id="traditionalMem">53.4</div>
+                    <div class="result-unit" id="traditionalUnit">MB</div>
+                </div>
+                <div class="result-card qe">
+                    <h3>With Quantum Echo™</h3>
+                    <div class="result-value" id="qeMem">21.2</div>
+                    <div class="result-unit" id="qeUnit">MB</div>
+                </div>
+            </div>
+
+            <div class="gpu-stats" id="gpuStats">
+                <div class="gpu-card">
+                    <h3>🎮 VRAM Utilized</h3>
+                    <div class="gpu-value" id="vramUsed">0 MB</div>
+                </div>
+                <div class="gpu-card">
+                    <h3>💾 RAM Offloaded to GPU</h3>
+                    <div class="gpu-value" id="ramOffloaded">0 MB</div>
+                </div>
+            </div>
+
+            <div class="savings-banner">
+                <h3>ESTIMATED SAVINGS</h3>
+                <div class="savings-value" id="savingsPercent">60%</div>
+                <div class="savings-detail">
+                    <span id="savedMem">32.2 MB</span> freed for other operations
+                </div>
+            </div>
+
+            <div class="industry-note" id="industryNote">
+                💡 <strong>For games:</strong> This freed memory can support higher resolution textures, more NPCs, or smoother streaming in open worlds.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Developed by Quantum Phases — © 2025 All rights reserved.
+    </footer>
+
+<script>
+/*
+ * Quantum Echo Memory Calculator
+ * Uses efficiency ratios - implementation details are proprietary
+ */
+
+// Efficiency factors (how much overhead QE uses vs traditional)
+// These are ratios, not actual byte sizes
+const QE_EFFICIENCY = {
+    active:     0.50,    // Active objects: 50% of traditional overhead
+    idle:       0.42,    // Idle/compressed: 42% of traditional overhead  
+    meta:       0.33,    // Metadata-only: 33% of traditional overhead
+    inactive:   0.25     // Inactive/ghosted: 25% of traditional overhead
+};
+
+const TRADITIONAL_OVERHEAD = 48;  // Bytes per object (industry standard)
+const COMPRESSION_RATIO = 0.35;   // Typical compression for game data
+const METADATA_FRACTION = 0.25;   // 25% of idle objects use metadata-only
+
+let gpuEnabled = false;
+
+// ============ UI Sync ============
+function syncInput(type) {
+    document.getElementById(type + 'Input').value = document.getElementById(type + 'Slider').value;
+    calculate();
+}
+
+function syncSlider(type) {
+    const slider = document.getElementById(type + 'Slider');
+    const input = document.getElementById(type + 'Input');
+    slider.value = Math.min(Math.max(input.value, slider.min), slider.max);
+    calculate();
+}
+
+function updateDistribution(changed) {
+    let active = parseInt(document.getElementById('activeSlider').value);
+    let idle = parseInt(document.getElementById('idleSlider').value);
+
+    if (active + idle > 100) {
+        if (changed === 'active') {
+            idle = 100 - active;
+            document.getElementById('idleSlider').value = idle;
+        } else {
+            active = 100 - idle;
+            document.getElementById('activeSlider').value = active;
+        }
+    }
+
+    const inactive = 100 - active - idle;
+
+    document.getElementById('activeValue').textContent = active;
+    document.getElementById('idleValue').textContent = idle;
+    document.getElementById('inactiveValue').textContent = inactive;
+
+    calculate();
+}
+
+function toggleGPU() {
+    gpuEnabled = document.getElementById('gpuToggle').checked;
+    document.getElementById('gpuStats').classList.toggle('visible', gpuEnabled);
+    calculate();
+}
+
+// ============ Main Calculation ============
+function calculate() {
+    const entities = parseInt(document.getElementById('entityInput').value) || 0;
+    const objectSize = parseInt(document.getElementById('sizeInput').value) || 0;
+
+    const pActive = parseInt(document.getElementById('activeSlider').value) / 100;
+    const pIdle = parseInt(document.getElementById('idleSlider').value) / 100;
+    const pInactive = 1 - pActive - pIdle;
+
+    const countActive = Math.floor(entities * pActive);
+    const countIdle = Math.floor(entities * pIdle);
+    const countInactive = entities - countActive - countIdle;
+
+    // Traditional: all objects fully loaded + full overhead
+    const traditionalMem = entities * (objectSize + TRADITIONAL_OVERHEAD);
+
+    // QE: adaptive based on object state
+    // Active: full object + reduced overhead
+    const activeBytes = countActive * (objectSize + TRADITIONAL_OVERHEAD * QE_EFFICIENCY.active);
+
+    // Idle: compressed object + reduced overhead
+    // Some idle objects are metadata-only (even smaller)
+    const metaCount = Math.floor(countIdle * METADATA_FRACTION);
+    const compressedCount = countIdle - metaCount;
+    
+    const compressedBytes = compressedCount * (objectSize * COMPRESSION_RATIO + TRADITIONAL_OVERHEAD * QE_EFFICIENCY.idle);
+    const metaBytes = metaCount * (TRADITIONAL_OVERHEAD * QE_EFFICIENCY.meta);
+
+    // Inactive: minimal footprint (just enough to resurrect)
+    const inactiveBytes = countInactive * (TRADITIONAL_OVERHEAD * QE_EFFICIENCY.inactive);
+
+    let qeMem = activeBytes + compressedBytes + metaBytes + inactiveBytes;
+
+    // GPU offloading (reduces RAM usage)
+    let vramUsed = 0;
+    let ramOffloaded = 0;
+
+    if (gpuEnabled) {
+        // 65% of active objects can be GPU-resident
+        const gpuResidentCount = Math.floor(countActive * 0.65);
+        vramUsed = gpuResidentCount * objectSize;
+        
+        // RAM savings: these objects don't need full data in RAM
+        // They keep minimal CPU-side reference
+        ramOffloaded = gpuResidentCount * objectSize * 0.85;
+        qeMem -= ramOffloaded;
+
+        document.getElementById('vramUsed').textContent = formatBytes(vramUsed);
+        document.getElementById('ramOffloaded').textContent = formatBytes(ramOffloaded);
+    }
+
+    // Ensure QE memory doesn't go below a reasonable minimum
+    qeMem = Math.max(qeMem, entities * 2);
+
+    // Calculate savings
+    const savedBytes = traditionalMem - qeMem;
+    const savingsPercent = Math.round((savedBytes / traditionalMem) * 100);
+
+    // Update display
+    updateDisplay('traditional', traditionalMem);
+    updateDisplay('qe', qeMem);
+
+    document.getElementById('savingsPercent').textContent = savingsPercent + '%';
+    document.getElementById('savedMem').textContent = formatBytes(savedBytes);
+}
+
+// ============ Display Helpers ============
+function updateDisplay(prefix, bytes) {
+    const formatted = formatBytesWithUnit(bytes);
+    document.getElementById(prefix + 'Mem').textContent = formatted.value;
+    document.getElementById(prefix + 'Unit').textContent = formatted.unit;
+}
+
+function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    if (bytes < 1024 * 1024 * 1024) return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    return (bytes / (1024 * 1024 * 1024)).toFixed(2) + ' GB';
+}
+
+function formatBytesWithUnit(bytes) {
+    if (bytes < 1024) return { value: bytes.toFixed(0), unit: 'bytes' };
+    if (bytes < 1024 * 1024) return { value: (bytes / 1024).toFixed(1), unit: 'KB' };
+    if (bytes < 1024 * 1024 * 1024) return { value: (bytes / (1024 * 1024)).toFixed(1), unit: 'MB' };
+    return { value: (bytes / (1024 * 1024 * 1024)).toFixed(2), unit: 'GB' };
+}
+
+// ============ Presets ============
+const presets = {
+    game: {
+        entities: 100000,
+        size: 512,
+        active: 10,
+        idle: 25,
+        note: '💡 <strong>For games:</strong> This freed memory can support higher resolution textures, more NPCs, or smoother streaming in open worlds.'
+    },
+    cad: {
+        entities: 50000,
+        size: 2048,
+        active: 5,
+        idle: 15,
+        note: '💡 <strong>For CAD:</strong> Handle larger assemblies without running out of memory. Keep more component history available for instant inspection.'
+    },
+    simulation: {
+        entities: 500000,
+        size: 256,
+        active: 15,
+        idle: 35,
+        note: '💡 <strong>For simulations:</strong> Run longer time series or higher resolution models within the same memory budget.'
+    },
+    finance: {
+        entities: 1000000,
+        size: 128,
+        active: 5,
+        idle: 20,
+        note: '💡 <strong>For finance:</strong> Process more historical data in memory for faster backtesting and real-time analysis.'
+    }
+};
+
+function applyPreset(type) {
+    const p = presets[type];
+    document.getElementById('entityInput').value = p.entities;
+    document.getElementById('entitySlider').value = Math.min(p.entities, 1000000);
+    document.getElementById('sizeInput').value = p.size;
+    document.getElementById('sizeSlider').value = Math.min(p.size, 8192);
+    document.getElementById('activeSlider').value = p.active;
+    document.getElementById('idleSlider').value = p.idle;
+    document.getElementById('activeValue').textContent = p.active;
+    document.getElementById('idleValue').textContent = p.idle;
+    document.getElementById('inactiveValue').textContent = 100 - p.active - p.idle;
+    document.getElementById('industryNote').innerHTML = p.note;
+    calculate();
+}
+
+// Initial calculation
+calculate();
+</script>
+
+</body>
+</html>
